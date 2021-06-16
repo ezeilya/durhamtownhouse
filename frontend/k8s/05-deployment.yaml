@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: durhamtownhouse-com
+  namespace: durhamtownhouse-com
+  labels:
+    app: durhamtownhouse-com
+    app.kubernetes.io/name: durhamtownhouse-com
+    app.kubernetes.io/part-of: durhamtownhouse-com
+spec:
+  selector:
+    matchLabels:
+      app: durhamtownhouse-com
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: durhamtownhouse-com # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: durhamtownhouse-com
+          imagePullPolicy: Always
+          image: quay.io/daniellesperoni/durhamtownhouse-frontend:latest
+          ports:
+            - containerPort: 8080
+              name: web
