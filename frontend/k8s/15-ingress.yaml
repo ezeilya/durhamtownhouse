@@ -1,0 +1,25 @@
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: durhamtownhouse-com
+  namespace: durhamtownhouse-com
+  labels:
+    app: durhamtownhouse-com
+    app.kubernetes.io/name: durhamtownhouse-com
+    app.kubernetes.io/part-of: durhamtownhouse-com
+  annotations:
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+    - hosts:
+        - durhamtownhouse.com
+      secretName: site-durhamtownhouse-com-tls
+  rules:
+    - host: durhamtownhouse.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: durhamtownhouse-com-svc
+              servicePort: 8080
